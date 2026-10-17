@@ -1184,6 +1184,32 @@ html[data-tema] .fab-btn span{background:transparent;color:#fff;font-family:var(
 .tl-ev.prox{background:var(--accent);color:#fff}
 .tl-ev i{display:none}
 .tl-hd{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:#ff3b5c;pointer-events:none;z-index:3}
+#moTrack{min-height:0;max-height:440px;overflow-y:auto;cursor:default}
+.tl2-row{display:flex;height:32px;border-bottom:1px solid var(--line)}
+.tl2-row:last-of-type{border-bottom:0}
+.tl2-rot{width:124px;flex:none;display:flex;align-items:center;padding:0 10px;font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--line);background:var(--surface);position:sticky;left:0;z-index:2}
+.tl2-area{position:relative;flex:1;cursor:pointer}
+.tl2-regua{height:26px;position:sticky;top:0;z-index:4;background:var(--surface-2)}
+.tl2-regua .tl2-rot{font-weight:500;font-size:10.5px;color:var(--faint)}
+.tl2-regua .tl2-area span{position:absolute;top:0;height:26px;padding:6px 0 0 4px;font:10px var(--mono,monospace);color:var(--faint);border-left:1px solid var(--line-2);pointer-events:none}
+.tl2-fala{height:38px;background:color-mix(in srgb, var(--accent) 5%, transparent)}
+.tl2-cue{position:absolute;top:5px;bottom:5px;padding:0 7px;border-radius:7px;background:var(--surface);border:1px solid var(--line-2);font-size:11px;line-height:26px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.tl2-cue:hover{border-color:var(--accent);z-index:2;overflow:visible;width:auto!important;max-width:60%}
+.tl2-vazio{position:absolute;left:10px;top:0;line-height:38px;font-size:11px;color:var(--faint)}
+.tl2-bl{position:absolute;top:5px;bottom:5px;min-width:8px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--accent-soft);border:1px solid var(--accent);color:var(--fg);font-size:10.5px;font-family:var(--mono,monospace);cursor:grab;overflow:hidden;white-space:nowrap;touch-action:none}
+.tl2-bl span{pointer-events:none;padding:0 10px;overflow:hidden;text-overflow:ellipsis}
+.tl2-bl b{position:absolute;top:0;bottom:0;width:9px;cursor:ew-resize;background:transparent}
+.tl2-bl b[data-h="a"]{left:0;border-radius:8px 0 0 8px}
+.tl2-bl b[data-h="b"]{right:0;border-radius:0 8px 8px 0}
+.tl2-bl b:hover,.tl2-bl.arrasta b{background:color-mix(in srgb, var(--accent) 55%, transparent)}
+.tl2-bl.arrasta{cursor:grabbing;box-shadow:0 0 0 3px var(--accent-soft);z-index:3}
+.tl2-bl.prox{background:var(--accent);color:#fff}
+.tl2-mapa{padding:9px 12px 7px;border-bottom:1px solid var(--line);background:var(--surface)}
+.tl2-mapa small{display:block;margin-top:5px;font-size:10.5px;color:var(--faint)}
+.tl2-mapa-in{position:relative;height:20px;border-radius:7px;background:var(--surface-2);cursor:pointer;touch-action:none}
+.tl2-mapa-in i{position:absolute;top:6px;height:8px;border-radius:3px;background:var(--line-2);pointer-events:none}
+.tl2-jan{position:absolute;top:0;bottom:0;min-width:8px;border:2px solid var(--accent);border-radius:7px;background:var(--accent-soft);cursor:grab}
+.tl2-hd{position:absolute;top:0;height:100%;width:2px;margin-left:-1px;background:#ff3b5c;pointer-events:none;z-index:5}
 /* estáticos: ajustes */
 .aj-filtros{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 6px}
 .aj-f{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:12px;padding:5px;cursor:pointer}
@@ -1715,7 +1741,7 @@ html[data-tema] .ini-acv b{font-variant-numeric:tabular-nums}
         <div class="row" style="flex-wrap:wrap"><button class="btn sm" id="moPlay" type="button">▶</button><span class="mono small" id="moT">0,0 s</span><label class="small muted" style="display:flex;gap:6px;align-items:center">Duração <input type="number" id="moDur" min="0.5" max="300" step="0.5" style="width:80px"> s</label><span style="flex:1"></span>
           <button class="btn sm" id="moMarcar" type="button" title="Toque o vídeo e aperte M na hora de cada item entrar">● Marcar no play</button><button class="btn sm" id="moFala" type="button" title="Põe cada item no momento em que a palavra é dita no job">≋ Sincronizar com a fala</button><button class="btn sm ghost" id="moDistribui" type="button">Distribuir igual</button></div>
         <div class="tl-track" id="moTrack"></div>
-        <p class="small muted" style="margin:6px 0 0">Arraste cada marcador pra mudar quando o item entra. Clique na régua pra ir até o ponto. Espaço toca e pausa.</p>
+        <p class="small muted" style="margin:6px 0 0">Cada item tem a sua faixa: arraste o bloco pra mudar de lugar e puxe as pontas pra acertar onde entra e onde sai. Com job escolhido, a faixa Fala mostra o que está sendo dito e os blocos grudam no começo das palavras. Clique numa fala ou na régua pra ir até o ponto. Espaço toca e pausa.</p>
       </div>
       </div>
       <div class="mo-side">
@@ -7386,14 +7412,14 @@ function distribui(n, dur, modo){
   const st=Math.min(0.7, (dur*0.6)/Math.max(1,n)); return [...Array(n)].map((_,i)=>+(0.15+i*st).toFixed(2));
 }
 function moRender(ctx, W, H, t, mo, B){
-  const L=MO_LAYOUTS[mo.tpl]; if(!L) return; const S=estiloDe(mo.S), dur=durDe(mo), ev=evDe(mo), u=Math.min(W,H)/1080;
+  const L=MO_LAYOUTS[mo.tpl]; if(!L) return; const S=estiloDe(mo.S), dur=durDe(mo), ev=evDe(mo), fim=fimDe(mo), u=Math.min(W,H)/1080;
   const Bx=Object.assign({}, B); if(S.cor) Bx.cor=S.cor; if(S.cor2) Bx.cor2=S.cor2;
   let items=[]; try{ items=L.monta(ctx, W, H, mo.P, Bx, S, ev, t)||[]; }catch(e){ console.warn(e); return; }
   for(const it of items){
     const t0=ev[it.e]!=null?ev[it.e]:0;
-    const tOut = L.modo==="troca" ? (ev[it.e+1]!=null?ev[it.e+1]:dur-0.35) : dur-0.5;
+    const tOut = fim[it.e]!=null ? fim[it.e] : (L.modo==="troca" ? (ev[it.e+1]!=null?ev[it.e+1]:dur-0.35) : dur-0.5);
     if(it.k==="wipe"){ desenhaWipe(ctx,W,H,t,dur,it,S,Bx); continue; }
-    if(it.fixo){ if(t<(ev[0]||0)||t>dur-0.2) continue; ctx.save(); desenhaForma(ctx,S,Bx,it.x,it.y,it.w,it.h,{u}); ctx.restore(); continue; }
+    if(it.fixo){ if(t<Math.min(...ev,ev[0]||0)||t>Math.min(dur-0.2, Math.max(...fim, 0)+0.3)) continue; ctx.save(); desenhaForma(ctx,S,Bx,it.x,it.y,it.w,it.h,{u}); ctx.restore(); continue; }
     const an=animItem(S, t, t0, tOut, u); if(!an) continue;
     const bx=caixaItem(it), cx=bx.x+bx.w/2, cy=bx.y+bx.h/2;
     comAnim(ctx, an, cx, cy, ()=>desenhaItem(ctx, it, S, Bx, u, t, t0, an, W, H, dur), bx);
@@ -7612,6 +7638,7 @@ function moEditor(){
   $$("[data-fpv]").forEach(cv=>{ const c=cv.getContext("2d"); c.clearRect(0,0,64,40); desenhaForma(c, Object.assign({},S,{forma:cv.dataset.fpv,opac:100,sombra:false,linha:2}), B, 8, 8, 48, 24, {cor:S.cor||B.cor, cor2:S.cor2||B.cor2, u:0.5}); });
   const js=moJobs(), jsel=js.find(j=>j.id===MO.jobId)?MO.jobId:"";
   $("#moTempo").innerHTML=`<label class="f">Job<select id="moJob"><option value="">Sem job (clipe solto)</option>${js.map(j=>`<option value="${j.id}" ${j.id===jsel?"selected":""}>${esc(j.titulo)}</option>`).join("")}</select></label>
+    ${jsel&&MO.fundo==="video"&&!moVideoOk()?`<button class="btn sm primary" type="button" id="moAbreVid">🎬 Abrir o vídeo do job</button><p class="small muted" style="margin:0">O Chrome pede pra escolher o arquivo do bruto de novo depois que a página recarrega.</p>`:""}
     ${jsel?`<label class="f">Começa no corte em <span class="mono small" id="moT0v">${MO.t0.toFixed(1).replace(".",",")} s</span><input type="range" id="moT0" min="0" max="${Math.max(1,outDur(JOBS.find(j=>j.id===jsel))-0.5).toFixed(1)}" step="0.1" value="${MO.t0}"></label>
     <div class="list">${(JOBS.find(j=>j.id===jsel).motions||[]).map((m,i)=>`<div class="item"><div class="top"><b style="flex:1">${esc(MO_LAYOUTS[m.tpl]?MO_LAYOUTS[m.tpl].nome:m.tpl)}</b><span class="mono small muted">${m.t0.toFixed(1)} → ${(m.t0+durDe(m)).toFixed(1)} s</span><button class="linkbtn" data-moedit="${i}">editar</button><button class="linkbtn" data-model="${i}">tirar</button></div></div>`).join("")||`<p class="small muted" style="margin:0">Nenhum motion neste job ainda.</p>`}</div>`:`<p class="small muted" style="margin:0">Escolha um job pra sincronizar com a fala e pôr o motion no corte.</p>`}`;
   $("#moDim").innerHTML=ds.map(d=>`<button type="button" data-modim="${d}" aria-pressed="${d===MO.dim}">${d}</button>`).join("");
@@ -7622,7 +7649,7 @@ function moEditor(){
 }
 function icPrev(ref){ if(!ref||!ref.n) return `<i class="ic-vazio">?</i>`; if(ref.lib==="asset") return `<img data-assetprev="${esc(ref.n)}" alt="">`; return `<img src="${esc(urlIcone(ref))}" alt="">`; }
 document.addEventListener("fontes:ok", moRedraw);
-$("#moCampos").addEventListener("input", e=>{ const k=e.target.dataset.mo; if(!k) return; const v=e.target.type==="range"||e.target.type==="number"?+e.target.value:e.target.value; const L=MO_LAYOUTS[MO.mo.tpl], n0=L.eventos(MO.mo.P).length; MO.mo.P[k]=v; const lab=$(`[data-mov="${k}"]`); if(lab) lab.textContent=v; if(L.eventos(MO.mo.P).length!==n0) MO.mo.P._ev=null; renderTL(); moDesenha(); });
+$("#moCampos").addEventListener("input", e=>{ const k=e.target.dataset.mo; if(!k) return; const v=e.target.type==="range"||e.target.type==="number"?+e.target.value:e.target.value; const L=MO_LAYOUTS[MO.mo.tpl], n0=L.eventos(MO.mo.P).length; MO.mo.P[k]=v; const lab=$(`[data-mov="${k}"]`); if(lab) lab.textContent=v; if(L.eventos(MO.mo.P).length!==n0){ MO.mo.P._ev=null; MO.mo.P._fim=null; } renderTL(); moDesenha(); });
 $("#moCampos").addEventListener("click", e=>{
   const b=e.target.closest("[data-moic]"); if(b){ const k=b.dataset.moic; escolherIcone(ref=>{ MO.mo.P[k]=ref; moEditor(); }); return; }
   const c=e.target.closest("[data-moics]"); if(c){ const [k,i]=c.dataset.moics.split(":"); escolherIcone(ref=>{ MO.mo.P[k]=(MO.mo.P[k]||[]).slice(); MO.mo.P[k][+i]=ref; moEditor(); }); return; }
@@ -7638,45 +7665,133 @@ $("#moEstilo").addEventListener("click", e=>{ const f=e.target.closest("[data-ms
   if(e.target.id==="moSalvaModelo"){ const nome=prompt("Nome do modelo", MO_LAYOUTS[MO.mo.tpl].nome+" da marca"); if(!nome) return; const P=JSON.parse(JSON.stringify(MO.mo.P)); delete P._ev; MODELOS.unshift({nome, tpl:MO.mo.tpl, S:JSON.parse(JSON.stringify(MO.mo.S)), P, desc:"Salvo pela equipe"}); salvaModelos(); toast("Modelo salvo em Da equipe"); }
 });
 function moTamanho(){ const [W,H]=FMTS[MO.dim]||[1080,1920], k=Math.min(1, 900/Math.max(W,H)); const cv=$("#moCanvas"); cv.width=Math.round(W*k); cv.height=Math.round(H*k); }
-async function moFundoVideo(){ const j=JOBS.find(x=>x.id===MO.jobId); if(!j) return null; if(cur!==j) cur=j; const f=FILES[j.id]; if(!f) return null; try{ await loadVideo(f, j.id); }catch(e){ return null; } return j; }
+/* ---------- vídeo do job dentro da prévia ---------- */
+const TL_ROT = 124;   // largura da coluna de nomes na linha do tempo
+const moJobAtual = () => MO.jobId ? JOBS.find(x=>x.id===MO.jobId) : null;
+const moVideoOk = () => MO.fundo==="video" && !!cur && cur.id===MO.jobId && loadedFor===MO.jobId && !!video.src && video.readyState>=1;
+async function moFundoVideo(pedir){
+  const j=moJobAtual(); if(!j) return null; if(cur!==j) cur=j;
+  let f=FILES[j.id];
+  if(!f && pedir!==false) f=await getFileFor(j).catch(()=>null);
+  if(!f){ MO.semVideo=true; return null; }
+  try{ await loadVideo(f, j.id); }catch(e){ MO.semVideo=true; toast(e.message||"Não deu pra abrir o vídeo"); return null; }
+  MO.semVideo=false; video.muted=false;
+  const s=outToSrc(j, MO.t0+MO.t); if(s) await seek(s.t);
+  return j;
+}
+async function moEscolheVideo(){
+  const j=moJobAtual(); if(!j) return;
+  const got=await pickFile(); if(!got||!got.file) return;
+  FILES[j.id]=got.file; if(got.handle) await idb.set("handles", j.id, got.handle).catch(()=>{});
+  MO.fundo="video"; await moFundoVideo(false); moEditor();
+}
+function moSeekVideo(){
+  if(!moVideoOk()) return; const s=outToSrc(cur, MO.t0+MO.t); if(!s) return;
+  clearTimeout(MO._sk); MO._sk=setTimeout(()=>{ if(Math.abs(video.currentTime-s.t)<0.01){ if(!MO.play) moDesenha(); return; } seek(s.t).then(()=>{ if(!MO.play) moDesenha(); }); }, 25);
+}
+const moHeadPos = (t, D) => `calc(${TL_ROT}px + (100% - ${TL_ROT}px) * ${clamp(t/D,0,1)})`;
 function moDesenha(ctx, W, H, t, fundo){
   const cv=$("#moCanvas"); const tela=!ctx; ctx=ctx||cv.getContext("2d"); W=W||cv.width; H=H||cv.height; t=t!=null?t:MO.t; fundo=fundo||MO.fundo;
   ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.filter="none"; ctx.globalAlpha=1; ctx.globalCompositeOperation="source-over";
+  let semVid=false;
   if(fundo==="transparente") ctx.clearRect(0,0,W,H);
   else if(fundo==="verde"){ ctx.fillStyle="#00B140"; ctx.fillRect(0,0,W,H); }
   else if(fundo==="preto"){ ctx.fillStyle="#000"; ctx.fillRect(0,0,W,H); }
-  else if(fundo==="video" && video.readyState>=2 && cur && cur.id===MO.jobId){ try{ drawFrame(ctx, W, H, MO.dim, Object.assign({}, cur, {motions:[]}), video.currentTime, {clean:true}); }catch(e){ ctx.fillStyle="#000"; ctx.fillRect(0,0,W,H); } }
-  else { const B=estiloMarca(MARCA); ctx.fillStyle="#0b0b10"; ctx.fillRect(0,0,W,H); const g=ctx.createRadialGradient(W*0.2,H*0.1,0,W*0.2,H*0.1,Math.max(W,H)*0.9); g.addColorStop(0,comAlfa(B.cor,0.33)); g.addColorStop(1,"transparent"); ctx.fillStyle=g; ctx.fillRect(0,0,W,H); }
+  else if(fundo==="video" && moVideoOk()){ try{ drawFrame(ctx, W, H, MO.dim, Object.assign({}, cur, {motions:[]}), video.currentTime, {clean:true}); }catch(e){ ctx.fillStyle="#000"; ctx.fillRect(0,0,W,H); } }
+  else { const B=estiloMarca(MARCA); ctx.fillStyle="#0b0b10"; ctx.fillRect(0,0,W,H); const g=ctx.createRadialGradient(W*0.2,H*0.1,0,W*0.2,H*0.1,Math.max(W,H)*0.9); g.addColorStop(0,comAlfa(B.cor,0.33)); g.addColorStop(1,"transparent"); ctx.fillStyle=g; ctx.fillRect(0,0,W,H); semVid = fundo==="video"; }
   try{ moRender(ctx, W, H, t, MO.mo, estiloMarca(MARCA)); }catch(e){ console.warn(e); }
+  if(tela && semVid){ const fs=Math.round(W*0.034); ctx.fillStyle="rgba(0,0,0,.55)"; ctx.fillRect(0,H*0.44,W,fs*3.4); ctx.fillStyle="#fff"; ctx.font=`600 ${fs}px system-ui,sans-serif`; ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillText(MO.jobId?"O vídeo do job ainda não abriu":"Escolha um job pra ver o vídeo aqui", W/2, H*0.44+fs*1.1); ctx.font=`400 ${Math.round(fs*0.8)}px system-ui,sans-serif`; ctx.fillText(MO.jobId?"Clique em “Abrir o vídeo do job”, ao lado":"no card Job, ao lado", W/2, H*0.44+fs*2.3); }
   ctx.restore();
-  if(tela){ $("#moT").textContent=t.toFixed(1).replace(".",",")+" / "+String(durDe(MO.mo)).replace(".",",")+" s"; const hd=$("#moHead"); if(hd) hd.style.left=(t/durDe(MO.mo)*100)+"%"; }
+  if(tela){ const D=durDe(MO.mo); $("#moT").textContent=t.toFixed(1).replace(".",",")+" / "+String(D).replace(".",",")+" s"+(MO.jobId?`  ·  no corte ${(MO.t0+t).toFixed(1).replace(".",",")} s`:""); const hd=$("#moHead"); if(hd) hd.style.left=moHeadPos(t, D); }
 }
-function moPlay(){ if(MO.play){ MO.play=false; cancelAnimationFrame(moRaf); $("#moPlay").textContent="▶"; return; } MO.play=true; $("#moPlay").textContent="❚❚"; if(MO.t>=durDe(MO.mo)-0.05) MO.t=0; let last=performance.now();
-  const tick=now=>{ if(!MO.play) return; MO.t+=(now-last)/1000; last=now; const D=durDe(MO.mo); if(MO.t>=D){ MO.t=D; MO.play=false; $("#moPlay").textContent="▶"; if(MO.marcando>=0){ MO.marcando=-1; renderTL(); } }
-    if(MO.fundo==="video"&&cur&&cur.id===MO.jobId){ const s=outToSrc(cur, MO.t0+MO.t); if(s&&Math.abs(video.currentTime-s.t)>0.12) video.currentTime=s.t; }
-    moDesenha(); if(MO.play) moRaf=requestAnimationFrame(tick); }; moRaf=requestAnimationFrame(tick); }
+function moPara(){ MO.play=false; cancelAnimationFrame(moRaf); if(!video.paused && loadedFor===MO.jobId) video.pause(); $("#moPlay").textContent="▶"; }
+function moPlay(){
+  if(MO.play){ moPara(); return; }
+  MO.play=true; $("#moPlay").textContent="❚❚"; if(MO.t>=durDe(MO.mo)-0.05) MO.t=0;
+  const comVideo=moVideoOk(), j=cur;
+  const loop=()=>{ let last=performance.now();
+    const tick=now=>{ if(!MO.play) return;
+      if(view!=="motion"){ moPara(); return; }
+      const D=durDe(MO.mo);
+      if(comVideo){
+        const segs=segsOf(j), vt=video.currentTime; let o=srcToOut(j, vt);
+        const sAt=segs.find(x=>vt>=x.in-1e-3 && vt<=x.out+1e-3);
+        if(sAt && vt>=sAt.out-0.03){ const nx=segs[segs.indexOf(sAt)+1]; if(nx) video.currentTime=nx.in; }
+        if(o==null){ const nx=segs.find(x=>x.in>vt); if(nx){ video.currentTime=nx.in; o=srcToOut(j, nx.in); } else o=MO.t0+D; }
+        MO.t=Math.max(0, o-MO.t0);
+      } else MO.t+=(now-last)/1000;
+      last=now;
+      if(MO.t>=D){ MO.t=D; moPara(); if(MO.marcando>=0){ MO.marcando=-1; renderTL(); } }
+      moDesenha(); if(MO.play) moRaf=requestAnimationFrame(tick); };
+    moRaf=requestAnimationFrame(tick); };
+  if(comVideo){ const s=outToSrc(j, MO.t0+MO.t); (async()=>{ if(s) await seek(s.t); video.muted=false; try{ await video.play(); }catch(e){} if(MO.play) loop(); })(); }
+  else loop();
+}
 $("#moPlay").addEventListener("click", moPlay);
 
-/* ---------- linha do tempo ---------- */
+/* ---------- linha do tempo: uma faixa por item, com início e fim ---------- */
+function fimDe(mo){
+  const L=MO_LAYOUTS[mo.tpl], ev=evDe(mo), dur=durDe(mo), f=Array.isArray(mo.P._fim)?mo.P._fim:[];
+  return ev.map((a,i)=>{ const v=f[i]; if(typeof v==="number" && v>a+0.15 && v<=dur+1e-6) return v;
+    if(L && L.modo==="troca") return Math.min(dur, Math.max(a+0.2, ev[i+1]!=null?ev[i+1]:dur-0.35));
+    return Math.min(dur, Math.max(a+0.2, dur-0.5)); });
+}
+function moPalavras(){ const j=moJobAtual(); return j ? falaDoJob(j, MO.t0, durDe(MO.mo)) : []; }
 function renderTL(){
-  const mo=MO.mo; if(!mo) return; const L=MO_LAYOUTS[mo.tpl], labels=L.eventos(mo.P), ev=evDe(mo), D=durDe(mo);
+  const mo=MO.mo; if(!mo) return; const L=MO_LAYOUTS[mo.tpl], labels=L.eventos(mo.P), ev=evDe(mo), fim=fimDe(mo), D=durDe(mo), j=moJobAtual();
   mo.P._ev=ev;
-  const passo = D>60?10:D>20?5:D>8?2:1;
-  const linhas=labels.length>14?3:labels.length>5?2:1;
-  $("#moTrack").style.height=(34+linhas*34)+"px";
-  $("#moTrack").innerHTML=`<div class="tl-regua">${[...Array(Math.floor(D/passo)+1)].map((_,i)=>`<span style="left:${i*passo/D*100}%">${i*passo}s</span>`).join("")}</div>`+
-    labels.map((l,i)=>`<button type="button" class="tl-ev ${MO.marcando===i?"prox":""}" data-ev="${i}" style="left:${ev[i]/D*100}%;top:${30+(i%linhas)*34}px" title="${esc(l)} · ${ev[i].toFixed(2)} s"><i></i>${esc(String(l).slice(0,18))}</button>`).join("")+`<div class="tl-hd" id="moHead" style="left:${MO.t/D*100}%"></div>`;
+  const pc=t=>(clamp(t,0,D)/D*100).toFixed(3)+"%";
+  const passo = D>60?10:D>20?5:D>8?2:D>3?1:0.5;
+  const fmtS=t=>(Math.round(t*10)/10).toString().replace(".",",");
+  let h=`<div class="tl2-row tl2-regua"><div class="tl2-rot">${j?`no corte: ${fmtS(MO.t0)}s`:"tempo"}</div><div class="tl2-area" data-area>${[...Array(Math.floor(D/passo+1e-6)+1)].map((_,i)=>`<span style="left:${pc(i*passo)}">${fmtS(i*passo)}s</span>`).join("")}</div></div>`;
+  if(j){
+    const cues=cuesOut(j).filter(c=>c.e>MO.t0 && c.s<MO.t0+D);
+    h+=`<div class="tl2-row tl2-fala"><div class="tl2-rot">💬 Fala</div><div class="tl2-area" data-area>${cues.length?cues.map(c=>{ const a=Math.max(0,c.s-MO.t0), b=Math.min(D,c.e-MO.t0); return `<div class="tl2-cue" data-cue="${a.toFixed(2)}" style="left:${pc(a)};width:${pc(b-a)}" title="${esc(c.text)}">${esc(c.text)}</div>`; }).join(""):`<span class="tl2-vazio">${(j.cues||[]).length?"sem fala nesse trecho do corte":"esse job ainda não tem a fala transcrita"}</span>`}</div></div>`;
+  }
+  h+=labels.map((l,i)=>`<div class="tl2-row"><div class="tl2-rot" title="${esc(l)}">${esc(String(l).slice(0,24))}</div><div class="tl2-area" data-area><div class="tl2-bl ${MO.marcando===i?"prox":""}" data-ev="${i}" style="left:${pc(ev[i])};width:${pc(fim[i]-ev[i])}" title="${esc(l)} · entra ${fmtS(ev[i])}s · sai ${fmtS(fim[i])}s"><b data-h="a"></b><span>${fmtS(ev[i])}s → ${fmtS(fim[i])}s</span><b data-h="b"></b></div></div></div>`).join("");
+  h+=`<div class="tl2-hd" id="moHead" style="left:${moHeadPos(MO.t, D)}"></div>`;
+  if(j){ const OD=Math.max(0.5,outDur(j));
+    h=`<div class="tl2-mapa" id="moMapa"><div class="tl2-mapa-in">${cuesOut(j).map(c=>`<i style="left:${(c.s/OD*100).toFixed(3)}%;width:${((c.e-c.s)/OD*100).toFixed(3)}%"></i>`).join("")}<div class="tl2-jan" id="moJan" style="left:${(MO.t0/OD*100).toFixed(3)}%;width:${(Math.min(D,OD)/OD*100).toFixed(3)}%"></div></div><small>Corte inteiro (${fmtS(OD)}s). Arraste a janela roxa pra escolher em que trecho da fala o motion entra.</small></div>`+h; }
+  const tr=$("#moTrack"); tr.style.height=""; tr.innerHTML=h;
+  const hdEl=$("#moHead"), mp=$("#moMapa"); if(hdEl){ const top=mp?mp.offsetHeight:0; hdEl.style.top=top+"px"; hdEl.style.height=(tr.scrollHeight-top)+"px"; }
   $("#moMarcar").textContent = MO.marcando>=0 ? `● Marcar "${String(labels[MO.marcando]||"").slice(0,14)}" (tecla M)` : "● Marcar no play";
   $("#moMarcar").classList.toggle("primary", MO.marcando>=0);
 }
 let moDrag=null;
-$("#moTrack").addEventListener("pointerdown", e=>{ const b=e.target.closest("[data-ev]"), tr=$("#moTrack"), r=tr.getBoundingClientRect(), D=durDe(MO.mo);
-  if(b){ moDrag={i:+b.dataset.ev, r}; b.setPointerCapture(e.pointerId); e.preventDefault(); return; }
-  MO.t=clamp((e.clientX-r.left)/r.width*D,0,D); moDesenha(); });
-$("#moTrack").addEventListener("pointermove", e=>{ if(!moDrag) return; const D=durDe(MO.mo), t=clamp((e.clientX-moDrag.r.left)/moDrag.r.width*D,0,D-0.1); MO.mo.P._ev[moDrag.i]=+t.toFixed(2); MO.t=t; const b=$(`#moTrack [data-ev="${moDrag.i}"]`); if(b) b.style.left=(t/D*100)+"%"; moDesenha(); });
-$("#moTrack").addEventListener("pointerup", ()=>{ if(moDrag){ moDrag=null; renderTL(); } });
-$("#moDur").addEventListener("change", e=>{ const v=clamp(+e.target.value||5,0.5,300), D0=durDe(MO.mo); MO.mo.P.dur=v; if(MO.mo.P._ev) MO.mo.P._ev=MO.mo.P._ev.map(x=>+(x*v/D0).toFixed(2)); MO.t=Math.min(MO.t,v); renderTL(); moDesenha(); });
-$("#moDistribui").addEventListener("click", ()=>{ const L=MO_LAYOUTS[MO.mo.tpl]; MO.mo.P._ev=distribui(L.eventos(MO.mo.P).length, durDe(MO.mo), L.modo==="troca"?"troca":"espalha"); if(L.modo!=="troca"){ const n=MO.mo.P._ev.length, D=durDe(MO.mo); MO.mo.P._ev=MO.mo.P._ev.map((_,i)=>+(0.2+i*(D*0.85-0.2)/Math.max(1,n)).toFixed(2)); } renderTL(); moDesenha(); toast("Itens espalhados na duração"); });
+function moAreaRect(){ const a=$("#moTrack [data-area]"); return a?a.getBoundingClientRect():$("#moTrack").getBoundingClientRect(); }
+function moIma(t, ws){ let best=t, d=0.12; for(const w of ws){ const x=Math.abs(w.t-t); if(x<d){ d=x; best=w.t; } } return best; }
+let moJanDrag=null;
+function moMudaT0(t0){ const j=moJobAtual(); if(!j) return; const OD=outDur(j), D=durDe(MO.mo); MO.t0=+clamp(t0,0,Math.max(0,OD-Math.min(D,OD))).toFixed(2);
+  const jan=$("#moJan"); if(jan) jan.style.left=(MO.t0/OD*100)+"%"; const sl=$("#moT0"); if(sl) sl.value=MO.t0; const v=$("#moT0v"); if(v) v.textContent=MO.t0.toFixed(1).replace(".",",")+" s"; moSeekVideo(); moDesenha(); }
+$("#moTrack").addEventListener("pointerdown", e=>{
+  const mapa=e.target.closest("#moMapa .tl2-mapa-in"); if(mapa){ const j=moJobAtual(); if(!j) return; const r=mapa.getBoundingClientRect(), OD=outDur(j), D=durDe(MO.mo);
+    if(MO.play) moPara();
+    if(!e.target.closest("#moJan")) moMudaT0((e.clientX-r.left)/r.width*OD - Math.min(D,OD)/2);
+    moJanDrag={x0:e.clientX, t00:MO.t0, r, OD}; mapa.setPointerCapture(e.pointerId); e.preventDefault(); return; }
+  if(e.target.closest("#moMapa")) return;
+  const r=moAreaRect(), D=durDe(MO.mo);
+  const bl=e.target.closest("[data-ev]");
+  if(bl){ const i=+bl.dataset.ev, ev=evDe(MO.mo), fim=fimDe(MO.mo), hd=e.target.closest("[data-h]");
+    moDrag={i, modo:hd?hd.dataset.h:"mover", x0:e.clientX, a0:ev[i], b0:fim[i], r, ws:moPalavras(), el:bl};
+    bl.setPointerCapture(e.pointerId); bl.classList.add("arrasta"); e.preventDefault(); return; }
+  const cue=e.target.closest("[data-cue]");
+  if(cue){ MO.t=clamp(+cue.dataset.cue,0,D); }
+  else { if(!e.target.closest("[data-area]")) return; MO.t=clamp((e.clientX-r.left)/r.width*D,0,D); }
+  if(MO.play) moPara(); moSeekVideo(); moDesenha(); });
+$("#moTrack").addEventListener("pointermove", e=>{ if(moJanDrag){ const g=moJanDrag; moMudaT0(g.t00+(e.clientX-g.x0)/g.r.width*g.OD); return; } if(!moDrag) return; const g=moDrag, D=durDe(MO.mo), dt=(e.clientX-g.x0)/g.r.width*D, len=g.b0-g.a0, MIN=0.2;
+  let a=g.a0, b=g.b0;
+  if(g.modo==="mover"){ a=clamp(moIma(clamp(g.a0+dt,0,D-len), g.ws),0,D-len); b=a+len; MO.t=a; }
+  else if(g.modo==="a"){ a=clamp(moIma(g.a0+dt, g.ws),0,b-MIN); MO.t=a; }
+  else { b=clamp(moIma(g.b0+dt, g.ws),a+MIN,D); MO.t=Math.max(a, b-0.05); }
+  const P=MO.mo.P; P._ev=evDe(MO.mo).slice(); P._ev[g.i]=+a.toFixed(2);
+  const fim=fimDe(MO.mo); P._fim=Array.isArray(P._fim)?P._fim.slice():[]; for(let k=0;k<fim.length;k++) if(P._fim[k]==null) P._fim[k]=null; P._fim[g.i]=+b.toFixed(2);
+  g.el.style.left=(a/D*100)+"%"; g.el.style.width=((b-a)/D*100)+"%"; const sp=g.el.querySelector("span"); if(sp) sp.textContent=`${a.toFixed(1).replace(".",",")}s → ${b.toFixed(1).replace(".",",")}s`;
+  moSeekVideo(); moDesenha(); });
+$("#moTrack").addEventListener("pointerup", ()=>{ if(moJanDrag){ moJanDrag=null; renderTL(); } if(moDrag){ moDrag=null; renderTL(); } });
+$("#moTrack").addEventListener("pointercancel", ()=>{ if(moDrag){ moDrag=null; renderTL(); } });
+$("#moDur").addEventListener("change", e=>{ const v=clamp(+e.target.value||5,0.5,300), D0=durDe(MO.mo); MO.mo.P.dur=v; if(MO.mo.P._ev) MO.mo.P._ev=MO.mo.P._ev.map(x=>+(x*v/D0).toFixed(2)); if(Array.isArray(MO.mo.P._fim)) MO.mo.P._fim=MO.mo.P._fim.map(x=>x==null?null:+(x*v/D0).toFixed(2)); MO.t=Math.min(MO.t,v); renderTL(); moDesenha(); });
+$("#moDistribui").addEventListener("click", ()=>{ const L=MO_LAYOUTS[MO.mo.tpl]; MO.mo.P._fim=null; MO.mo.P._ev=distribui(L.eventos(MO.mo.P).length, durDe(MO.mo), L.modo==="troca"?"troca":"espalha"); if(L.modo!=="troca"){ const n=MO.mo.P._ev.length, D=durDe(MO.mo); MO.mo.P._ev=MO.mo.P._ev.map((_,i)=>+(0.2+i*(D*0.85-0.2)/Math.max(1,n)).toFixed(2)); } renderTL(); moDesenha(); toast("Itens espalhados na duração"); });
 $("#moMarcar").addEventListener("click", ()=>{ if(MO.marcando>=0){ marcaAgora(); return; } MO.marcando=0; MO.t=0; renderTL(); if(!MO.play) moPlay(); toast("Aperte M (ou este botão) na hora de cada item entrar"); });
 function marcaAgora(){ if(MO.marcando<0) return; const n=MO_LAYOUTS[MO.mo.tpl].eventos(MO.mo.P).length; MO.mo.P._ev[MO.marcando]=+MO.t.toFixed(2); MO.marcando++; if(MO.marcando>=n){ MO.marcando=-1; toast("Todos os itens marcados"); } renderTL(); }
 document.addEventListener("keydown", e=>{ if(view!=="motion"||!MO.mo) return; const tg=e.target; if(tg.closest&&tg.closest("input,textarea,select,[contenteditable=true]")) return;
@@ -7696,13 +7811,17 @@ $("#moFala").addEventListener("click", ()=>{ const j=JOBS.find(x=>x.id===MO.jobI
 });
 function usarFalaNoTexto(){ const j=JOBS.find(x=>x.id===MO.jobId); if(!j) return; const ws=falaDoJob(j, MO.t0, durDe(MO.mo)); if(!ws.length) return toast("Sem fala nesse trecho"); MO.mo.P.texto=ws.map(w=>w.w).join(" "); MO.mo.P._ev=ws.map(w=>w.t); moEditor(); toast(ws.length+" palavras no tempo da fala"); }
 
-$("#moTempo").addEventListener("input", e=>{ if(e.target.id==="moT0"){ MO.t0=+e.target.value; $("#moT0v").textContent=MO.t0.toFixed(1).replace(".",",")+" s"; if(MO.fundo==="video"&&cur&&cur.id===MO.jobId){ const s=outToSrc(cur,MO.t0+MO.t); if(s) seek(s.t).then(()=>moDesenha()); } else moDesenha(); } });
-$("#moTempo").addEventListener("change", async e=>{ if(e.target.id==="moJob"){ MO.jobId=e.target.value; MO.t0=0; MO.editIdx=null; if(MO.fundo==="video") await moFundoVideo(); moEditor(); } });
+function moT0Input(e){ if(e.target.id==="moT0"){ MO.t0=+e.target.value; const v=$("#moT0v"); if(v) v.textContent=MO.t0.toFixed(1).replace(".",",")+" s"; renderTL(); moSeekVideo(); moDesenha(); } }
+$("#moTempo").addEventListener("input", moT0Input);
+$("#moTempo").addEventListener("change", async e=>{ if(e.target.id==="moJob"){ if(MO.play) moPara(); MO.jobId=e.target.value; MO.t0=0; MO.editIdx=null;
+    if(MO.jobId){ MO.fundo="video"; moEditor(); await moFundoVideo(true); } else if(MO.fundo==="video") MO.fundo="marca";
+    moEditor(); } });
 $("#moTempo").addEventListener("click", e=>{ const j=JOBS.find(x=>x.id===MO.jobId); if(!j) return;
   const d=e.target.closest("[data-model]"); if(d){ j.motions.splice(+d.dataset.model,1); saveJob(j); moEditor(); toast("Motion tirado do corte"); }
-  const ed=e.target.closest("[data-moedit]"); if(ed){ const m=j.motions[+ed.dataset.moedit]; MO.mo={tpl:m.tpl, P:JSON.parse(JSON.stringify(m.P)), S:JSON.parse(JSON.stringify(m.S))}; MO.t0=m.t0; MO.t=0.8; MO.editIdx=+ed.dataset.moedit; moEditor(); } });
+  const ed=e.target.closest("[data-moedit]"); if(ed){ const m=j.motions[+ed.dataset.moedit]; MO.mo={tpl:m.tpl, P:JSON.parse(JSON.stringify(m.P)), S:JSON.parse(JSON.stringify(m.S))}; MO.t0=m.t0; MO.t=0.8; MO.editIdx=+ed.dataset.moedit; MO.fundo="video"; moEditor(); moFundoVideo(true).then(()=>moEditor()); }
+  if(e.target.closest("#moAbreVid")) moEscolheVideo(); });
 $("#moDim").addEventListener("click", e=>{ const b=e.target.closest("[data-modim]"); if(!b) return; MO.dim=b.dataset.modim; $$("#moDim [data-modim]").forEach(x=>x.setAttribute("aria-pressed", x===b)); moTamanho(); moDesenha(); });
-$("#moFundo").addEventListener("change", async e=>{ MO.fundo=e.target.value; if(MO.fundo==="video"){ if(!MO.jobId) toast("Escolha um job em Tempo"); else if(!await moFundoVideo()) toast("Abra o job na revisão uma vez pra liberar o vídeo"); else { const s=outToSrc(cur,MO.t0+MO.t); if(s) await seek(s.t); } } moDesenha(); });
+$("#moFundo").addEventListener("change", async e=>{ if(MO.play) moPara(); MO.fundo=e.target.value; if(MO.fundo==="video"){ if(!MO.jobId) toast("Escolha um job no card Job"); else if(!await moFundoVideo(true)) toast("Clique em Abrir o vídeo do job e escolha o arquivo do bruto"); } moEditor(); });
 $("#moNoCorte").addEventListener("click", ()=>{ const j=JOBS.find(x=>x.id===MO.jobId); if(!j) return; j.motions=j.motions||[];
   const it={id:nid("mo"), tpl:MO.mo.tpl, t0:MO.t0, P:JSON.parse(JSON.stringify(MO.mo.P)), S:JSON.parse(JSON.stringify(MO.mo.S))};
   if(MO.editIdx!=null&&j.motions[MO.editIdx]) j.motions[MO.editIdx]=it; else j.motions.push(it); j.motions.sort((a,b)=>a.t0-b.t0); MO.editIdx=null; j.updatedAt=new Date().toISOString(); saveJob(j); if(typeof logAtv==="function") logAtv(j, "pôs um motion ("+MO_LAYOUTS[MO.mo.tpl].nome+") no corte"); moEditor(); toast("No corte. Sai junto quando renderizar."); });
